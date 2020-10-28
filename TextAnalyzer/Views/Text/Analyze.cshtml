@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Analyze Page";
+}
+@using TextAnalyzer.Models;
+@model TextModel
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+</div>
+
+<div class="row justify-content-center mt-5">
+
+    <form asp-action="Analyze" method="post" class="list-group-horizontal form-add-product">
+        <div class="d-flex">
+            <div class="form-group">
+                <div class="col-md">
+                    <textarea asp-for="@Model.Text" class="form-control" value="" rows="10" cols="45" placeholder="Enter your text to analyze"></textarea>
+                    <span asp-validation-for="@Model.Text" class="text-danger"></span>
+                </div>
+                <div class="mt-5 d-flex justify-content-center">
+                    <input type="submit" class="btn btn-success" value="Analyze" />
+                </div>
+            </div>
+            
+            <div>
+                @foreach (var pair in AnalyzerListModel.AllAnalyzers) {
+                    <div class="form-group">
+                        <div class="col-md">
+                            <input type="checkbox" name="@pair.Key" id="@pair.Key" />
+                            <label for="@pair.Key">@pair.Key</label>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+       
+    </form>
+</div>
+
+
+@{
+    if (ViewBag.Result != null) {
+        <div class="mt-5">
+            @foreach (var analyzer in @ViewBag.Result) {
+                <div>
+                    @foreach (KeyValuePair<string, string> keyValue in analyzer) {
+                        <b>@keyValue.Key :</b>
+                        <span>@keyValue.Value</span>
+                    }
+                </div>
+            }
+        </div>
+    }
+
+}
+
