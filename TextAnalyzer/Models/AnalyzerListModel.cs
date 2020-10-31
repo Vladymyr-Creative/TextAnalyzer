@@ -17,8 +17,8 @@ namespace TextAnalyzer.Models
         static AnalyzerListModel()
         {
             AllAnalyzers = new Dictionary<string, IAnalyzer> {
-                ["SymbolCounterAnalyzer"] = new SymbolCounterAnalyzer(),
-                ["SymbolFrequencyAnalyzer"] = new SymbolFrequencyAnalyzer()
+                ["SpecialSymbolCounterAnalyzer"] = new SpecialSymbolCounterAnalyzer(),                
+                ["WordCounterAnalyzer"] = new WordCounterAnalyzer()
             };
         }
         public static Dictionary<string, IAnalyzer> AllAnalyzers { get; private set; }

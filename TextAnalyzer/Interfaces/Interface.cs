@@ -8,6 +8,7 @@ namespace TextAnalyzer.Interfaces
     public interface IAnalyzer
     {
         public string Name { get; }
+        public string Descripton { get; }
 
         public Dictionary<string, string> Analyze(string text);
     }

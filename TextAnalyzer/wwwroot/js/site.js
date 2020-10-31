@@ -1,4 +1,20 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
+    var analyzerList = $("#analyzerList input[type=checkbox]");
+    analyzerList.each(function () {
+        var name = $(this).attr("name");
+        var handleInputs = function () {
+            var inputAnalyzer = $(this).siblings("[type=hidden]").first();
+            if ($("input[name=" + name + "]:checked").length === 1) {
+                console.log(name + " checked");
+                inputAnalyzer.val(name);
+            } else {
+                console.log(name + " unchecked");
+                inputAnalyzer.val("");
+            }
+        }.bind(this);
 
-// Write your JavaScript code.
+        handleInputs();
+
+        $(this).on("click", handleInputs);
+    });
+});

@@ -14,7 +14,7 @@
         <div class="d-flex">
             <div class="form-group">
                 <div class="col-md">
-                    <textarea asp-for="@Model.Text" class="form-control" value="" rows="10" cols="45" placeholder="Enter your text to analyze"></textarea>
+                    <textarea asp-for="@Model.Text" class="form-control" value="" rows="20" cols="100" placeholder="Enter your text to analyze"></textarea>
                     <span asp-validation-for="@Model.Text" class="text-danger"></span>
                 </div>
                 <div class="mt-5 d-flex justify-content-center">
@@ -22,20 +22,26 @@
                 </div>
             </div>
             
-            <div>
-                @foreach (var pair in AnalyzerListModel.AllAnalyzers) {
-                    <div class="form-group">
-                        <div class="col-md">
-                            <input type="checkbox" name="@pair.Key" id="@pair.Key" />
-                            <label for="@pair.Key">@pair.Key</label>
-                        </div>
-                    </div>
-                }
+            <div id="analyzerList">
+                <h6>Supply at least one analyzer</h6>
+                @for (int index = 0; index < AnalyzerListModel.AllAnalyzers.Count; index++) {
+                    var item = AnalyzerListModel.AllAnalyzers.ElementAt(index);
 
+                    string itemChecked = "";
+                    if (Model.AnalyzerList != null && Model.AnalyzerList.Contains(item.Key)) {
+                        itemChecked = "checked";
+                    }
+                    <div class="form-group">
+                        <div class="col-md analyzer-item" data-title="@item.Value.Descripton">
+                            <input type="checkbox" name="@item.Key" id="@item.Key" @itemChecked />
+                            <input type="hidden" asp-for="@Model.AnalyzerList[index]" value="" />
+                            <label for="@item.Key">@item.Key</label>
+                            
+                        </div>
+                    </div>                    
+                }
             </div>
         </div>
-
-       
     </form>
 </div>
 
@@ -44,15 +50,23 @@
     if (ViewBag.Result != null) {
         <div class="mt-5">
             @foreach (var analyzer in @ViewBag.Result) {
-                <div>
-                    @foreach (KeyValuePair<string, string> keyValue in analyzer) {
-                        <b>@keyValue.Key :</b>
-                        <span>@keyValue.Value</span>
+            <div class="mt-5">
+                <h6>@analyzer["Name"]</h6>
+                @foreach (KeyValuePair<string, string> pair in analyzer) {
+                    if (pair.Key.Equals("Name")) {
+                        continue;
                     }
-                </div>
+                    <div class="pl-4">
+                        <b>@pair.Key :</b>
+                        <span>@pair.Value</span>
+                    </div>
+                }
+            </div>
             }
         </div>
+        }
+        if (ViewBag.Eror!= null) {
+            <h1 class="">@ViewBag.Eror</h1>
+        }
     }
-
-}
 
