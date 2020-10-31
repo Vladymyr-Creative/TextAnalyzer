@@ -25,8 +25,9 @@ namespace TextAnalyzer.Models
                     result.Add(key, subStringCount.ToString());
                 }
             }
-            result.Add("Symbols Count", totalCount.ToString());
+            
             result.Add("Unique Symbols Count", result.Count().ToString());
+            result.Add("Symbols Count", totalCount.ToString());
             return result;
         }
 
